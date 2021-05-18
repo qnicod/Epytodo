@@ -1,0 +1,25 @@
+SET SQL_MODE = 'NO_UNSIGNED_SUBTRACTION';
+DROP DATABASE IF EXISTS epytodo;
+CREATE DATABASE IF NOT EXISTS epytodo;
+USE epytodo;
+
+CREATE TABLE IF NOT EXISTS `user` (
+    `id` INT PRIMARY KEY NOT NULL AUTO_INCREMENT,
+    `email` VARCHAR(50) UNIQUE KEY NOT NULL,
+    `password` VARCHAR(500) NOT NULL,
+    `created_at` TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    `firstname` VARCHAR(50) NOT NULL,
+    `name` VARCHAR(50) NOT NULL
+);
+
+CREATE TABLE IF NOT EXISTS `todo` (
+    `id` INT PRIMARY KEY NOT NULL AUTO_INCREMENT,
+    `title` VARCHAR(255) NOT NULL,
+    `description` TEXT NOT NULL,
+    `created_at` TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    `due_time` DATETIME NOT NULL,
+    `status` enum('not started', 'todo','in progress','done') NOT NULL DEFAULT 'not started',
+    `user_id` INT NOT NULL
+);
+
+ALTER TABLE `todo` ADD FOREIGN KEY (`user_id`) REFERENCES `user` (`id`) ON DELETE CASCADE;
